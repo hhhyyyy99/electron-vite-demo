@@ -3,7 +3,10 @@ import { ElectronAPI } from '@electron-toolkit/preload'
 declare global {
   interface Window {
     electron: ElectronAPI
-    api: unknown,
+    api: {
+      sayHello: () => string
+    },
+    aboout: (message: string) => void
     logger: {
       info: (message: string) => void
       error: (message: string) => void

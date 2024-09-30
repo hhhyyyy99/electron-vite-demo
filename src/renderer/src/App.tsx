@@ -1,9 +1,10 @@
-import { Button } from "tea-component"
+import { Button } from 'tea-component'
+import Home from './pages/Home'
 
 function App(): JSX.Element {
   return (
     <>
-      <Button onClick={()=>{window.logger.info("测试")}}>测试</Button>
+      <Home />
     </>
   )
 }

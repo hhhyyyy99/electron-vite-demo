@@ -1,7 +1,6 @@
 import { webContents, BrowserWindow, Rectangle, screen } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
-import { Display } from '@constants/Display'
 
 // 修复electron18.0.0-beta.5 之后版本的BUG: 无法获取当前程序页面视频流
 export const selfWindws = async () =>
@@ -26,11 +25,11 @@ export const selfWindws = async () =>
       })
   )
 
-  export interface Display extends Rectangle {
-    id: number
-    scaleFactor: number
-  }
-  
+export interface Display extends Rectangle {
+  id: number
+  scaleFactor: number
+}
+
 export const getDisplay = (): Display => {
   const point = screen.getCursorScreenPoint()
   const { id, bounds, scaleFactor } = screen.getDisplayNearestPoint(point)
@@ -47,16 +46,25 @@ export const getDisplay = (): Display => {
 }
 
 export function rendererPath(window: BrowserWindow, fileName: string) {
- const url =  mainUrl(fileName)
- window.loadURL(url)
- if (is.dev) {
-  window.webContents.openDevTools()
- }
+  const url = mainUrl(fileName)
+  window.loadURL(url)
+  if (is.dev) {
+    window.webContents.openDevTools()
+  }
 }
+
+export function preloadPath(fileName: string) {
+  return `${join(__dirname, '../preload', fileName)}`
+}
+
 function mainUrl(fileName: string) {
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-      const mainUrl = `${process.env['ELECTRON_RENDERER_URL']}/${fileName}`;
-      return mainUrl;
+    const mainUrl = `${process.env['ELECTRON_RENDERER_URL']}/${fileName}`
+    return mainUrl
   }
-  return `${join(__dirname, "../renderer", fileName)}`;
+  return `${join(__dirname, '../renderer', fileName)}`
 }
+
+export const isLinux = process.platform == 'linux'
+export const isWin = process.platform == 'win32'
+export const isMac = process.platform == 'darwin'

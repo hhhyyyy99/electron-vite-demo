@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import logger from './utils/logger'
 import { registerIPC, unregisterIPC } from './ipc'
+import windowManger from './manger/windowManger'
 
 function createWindow(): void {
   logger.info('Create window')
@@ -54,6 +55,14 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  ipcMain.on("create-window",()=>{
+    windowManger.createWindow()
+  })
+
+  ipcMain.on("destroy-window",()=>{
+    windowManger.destroyWindow()
+  })
 
   ipcMain.on('open-external', (_event, url) => {
     shell.openExternal(url)

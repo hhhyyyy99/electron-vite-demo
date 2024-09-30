@@ -3,7 +3,11 @@ import { electronAPI } from '@electron-toolkit/preload'
 import { Logger } from '@constants/Logger'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  sayHello:()=>{
+    return 'Hello from Electron!'
+  }
+}
 
 const logger = {
   info: (message: string) => {

@@ -12,6 +12,14 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   preload: {
+    build: {
+      rollupOptions: {
+        input: {
+          index: resolve(__dirname, 'src/preload/index.ts'),
+          about: resolve(__dirname, 'src/preload/about.ts')
+        }
+      }
+    },
     resolve: {
       alias: {
         '@constants': resolve('/src/constants'),
@@ -20,6 +28,14 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    build: {
+      rollupOptions: {
+        input: {
+          index: resolve(__dirname, 'src/renderer/index.html'),
+          about: resolve(__dirname, 'src/renderer/about.html')
+        }
+      }
+    },
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src'),
