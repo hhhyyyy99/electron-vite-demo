@@ -2,7 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import logger from "../utils/logger"
+import logger from './utils/logger'
+import { registerIPC, unregisterIPC } from './ipc'
 
 function createWindow(): void {
   logger.info('Create window')
@@ -16,8 +17,8 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
-      experimentalFeatures: true,
-    },
+      experimentalFeatures: true
+    }
   })
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -59,11 +60,12 @@ app.whenReady().then(() => {
   })
 
   createWindow()
+  registerIPC()
 
   app.on('activate', function () {
     // On macOS, it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    console.log("BrowserWindow.getAllWindows().length",BrowserWindow.getAllWindows().length);
+    console.log('BrowserWindow.getAllWindows().length', BrowserWindow.getAllWindows().length)
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
@@ -75,6 +77,10 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+app.on('will-quit', () => {
+  unregisterIPC()
 })
 
 // In this file you can include the rest of your app"s specific main process

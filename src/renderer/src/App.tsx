@@ -1,7 +1,9 @@
+import { Button } from "tea-component"
+
 function App(): JSX.Element {
   return (
     <>
-      <div>测试</div>
+      <Button onClick={()=>{window.logger.info("测试")}}>测试</Button>
     </>
   )
 }
