@@ -2,11 +2,13 @@ import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 
+const constantsDir = resolve(__dirname, 'src/constants')
+
 export default defineConfig({
   main: {
     resolve: {
       alias: {
-        '@constants': resolve('/src/constants'),
+        '@constants': constantsDir
       }
     },
     plugins: [externalizeDepsPlugin()]
@@ -22,7 +24,7 @@ export default defineConfig({
     },
     resolve: {
       alias: {
-        '@constants': resolve('/src/constants'),
+        '@constants': constantsDir
       }
     },
     plugins: [externalizeDepsPlugin()]
@@ -38,8 +40,8 @@ export default defineConfig({
     },
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src'),
-        '@constants': resolve('/src/constants'),
+        '@renderer': resolve(__dirname, 'src/renderer/src'),
+        '@constants': constantsDir
       }
     },
     plugins: [react()]
