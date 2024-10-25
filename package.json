@@ -26,6 +26,11 @@
     "@tencentcloud/call-uikit-react": "^3.3.3",
     "electron-log": "^5.1.6",
     "electron-updater": "^6.1.7",
+    "localforage": "^1.10.0",
+    "radash": "^12.1.0",
+    "react-redux": "^9.1.2",
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "tea-component": "^2.7.9"
   },
   "devDependencies": {
